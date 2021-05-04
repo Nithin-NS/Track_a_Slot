@@ -1,9 +1,9 @@
 <template>
     <div class="grid justify-items-center">
         <div
-            class=" bg-white shadow-xl rounded-md max-w-lg md:max-w-lg p-6 space-y-6 mt-32"
+            class=" bg-white shadow-xl rounded-md max-w-lg md:max-w-lg p-6 space-y-6 mt-24"
         >
-            <h1 class="text-xl font-bold text-white">
+            <h1 class="text-xl font-bold">
                 Co-WIN Vaccination Registration
             </h1>
 
@@ -24,7 +24,7 @@
 
             <div class="mb-3 pt-0 relative">
                 <label for="select_number" class="text-blueGray-600"
-                    >Your Mobile Number</label
+                    >Your Mobile Number(Without +91)</label
                 >
                 <input
                     required
@@ -34,6 +34,13 @@
                     placeholder="Your Mobile Number"
                     class="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-wite bg-wite rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:ring w-full"
                 />
+
+                <span
+                    v-if="errors && errors.number"
+                    class="inline-block align-middle mr-8 mt-1 text-red-600"
+                >
+                    {{ errors.number[0] }}
+                </span>
             </div>
 
             <div class="mb-3 pt-0">
@@ -56,6 +63,13 @@
                         >{{ state.state_name }}</option
                     >
                 </select>
+
+                <span
+                    v-if="errors && errors.state"
+                    class="inline-block align-middle mr-8 mt-1 text-red-600"
+                >
+                    {{ errors.state[0] }}
+                </span>
             </div>
 
             <div class="mb-3 pt-0">
@@ -77,6 +91,13 @@
                         >{{ district.district_name }}</option
                     >
                 </select>
+
+                <span
+                    v-if="errors && errors.district"
+                    class="inline-block align-middle mr-8 mt-1 text-red-600"
+                >
+                    {{ errors.district[0] }}
+                </span>
             </div>
 
             <div class="mb-3 pt-0">
@@ -104,7 +125,8 @@ export default {
             select_district: "",
             districts: "",
             select_number: "",
-            success: false
+            success: false,
+            errors: null
         };
     },
     created: function() {
@@ -126,7 +148,7 @@ export default {
                 .then(
                     function(response) {
                         this.states = response.data.states;
-                        console.log(this.states);
+                        // console.log(this.states);
                     }.bind(this)
                 );
         },
@@ -147,7 +169,7 @@ export default {
                 .then(
                     function(response) {
                         this.districts = response.data.districts;
-                        console.log(this.districts);
+                        // console.log(this.districts);
                     }.bind(this)
                 );
         },
@@ -161,22 +183,23 @@ export default {
                 .then(
                     function(response) {
                         if (response.data) {
-                            console.log(response.data);
+                            // console.log(response.data);
                             this.success = true;
-                            // this.number = "";
-                            // state = "";
-                            // district = "";
+                            this.errors = null;
+                            this.select_state = "";
+                            this.select_number = "";
+                            this.select_district = "";
                         } else {
-                            console.log("No Data");
+                            // console.log("No Data");
                         }
                     }.bind(this)
                 )
                 .catch(error => {
-                    console.log(error.response);
-                    // if (error.response.status == 422) {
-                    //     this.errors = error.response.data.errors;
-
-                    // }
+                    if (error.response.status == 422) {
+                        this.errors = error.response.data.errors;
+                        // console.log(this.errors);
+                    }
+                    // this.errors = error.response.data.errors;
                 });
         }
     }

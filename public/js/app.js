@@ -1938,6 +1938,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "pink-alert",
   data: function data() {
@@ -1950,7 +1971,8 @@ __webpack_require__.r(__webpack_exports__);
       select_district: "",
       districts: "",
       select_number: "",
-      success: false
+      success: false,
+      errors: null
     };
   },
   created: function created() {
@@ -1967,8 +1989,7 @@ __webpack_require__.r(__webpack_exports__);
           Authorization: "Bearer " + this.accessToken
         }
       }).then(function (response) {
-        this.states = response.data.states;
-        console.log(this.states);
+        this.states = response.data.states; // console.log(this.states);
       }.bind(this));
     },
     getDistrict: function getDistrict() {
@@ -1980,28 +2001,31 @@ __webpack_require__.r(__webpack_exports__);
           Authorization: "Bearer " + this.accessToken
         }
       }).then(function (response) {
-        this.districts = response.data.districts;
-        console.log(this.districts);
+        this.districts = response.data.districts; // console.log(this.districts);
       }.bind(this));
     },
     saveDetails: function saveDetails() {
+      var _this = this;
+
       axios.post("/saveDetails", {
         number: this.select_number,
         state: this.select_state,
         district: this.select_district
       }).then(function (response) {
         if (response.data) {
-          console.log(response.data);
-          this.success = true; // this.number = "";
-          // state = "";
-          // district = "";
-        } else {
-          console.log("No Data");
+          // console.log(response.data);
+          this.success = true;
+          this.errors = null;
+          this.select_state = "";
+          this.select_number = "";
+          this.select_district = "";
+        } else {// console.log("No Data");
         }
       }.bind(this))["catch"](function (error) {
-        console.log(error.response); // if (error.response.status == 422) {
-        //     this.errors = error.response.data.errors;
-        // }
+        if (error.response.status == 422) {
+          _this.errors = error.response.data.errors; // console.log(this.errors);
+        } // this.errors = error.response.data.errors;
+
       });
     }
   }
@@ -19574,10 +19598,10 @@ var render = function() {
       "div",
       {
         staticClass:
-          " bg-white shadow-xl rounded-md max-w-lg md:max-w-lg p-6 space-y-6 mt-32"
+          " bg-white shadow-xl rounded-md max-w-lg md:max-w-lg p-6 space-y-6 mt-24"
       },
       [
-        _c("h1", { staticClass: "text-xl font-bold text-white" }, [
+        _c("h1", { staticClass: "text-xl font-bold" }, [
           _vm._v("\n            Co-WIN Vaccination Registration\n        ")
         ]),
         _vm._v(" "),
@@ -19623,7 +19647,7 @@ var render = function() {
               staticClass: "text-blueGray-600",
               attrs: { for: "select_number" }
             },
-            [_vm._v("Your Mobile Number")]
+            [_vm._v("Your Mobile Number(Without +91)")]
           ),
           _vm._v(" "),
           _c("input", {
@@ -19652,7 +19676,24 @@ var render = function() {
                 _vm.select_number = $event.target.value
               }
             }
-          })
+          }),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.number
+            ? _c(
+                "span",
+                {
+                  staticClass:
+                    "inline-block align-middle mr-8 mt-1 text-red-600"
+                },
+                [
+                  _vm._v(
+                    "\n                " +
+                      _vm._s(_vm.errors.number[0]) +
+                      "\n            "
+                  )
+                ]
+              )
+            : _vm._e()
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "mb-3 pt-0" }, [
@@ -19716,7 +19757,24 @@ var render = function() {
               })
             ],
             2
-          )
+          ),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.state
+            ? _c(
+                "span",
+                {
+                  staticClass:
+                    "inline-block align-middle mr-8 mt-1 text-red-600"
+                },
+                [
+                  _vm._v(
+                    "\n                " +
+                      _vm._s(_vm.errors.state[0]) +
+                      "\n            "
+                  )
+                ]
+              )
+            : _vm._e()
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "mb-3 pt-0" }, [
@@ -19780,7 +19838,24 @@ var render = function() {
               })
             ],
             2
-          )
+          ),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.district
+            ? _c(
+                "span",
+                {
+                  staticClass:
+                    "inline-block align-middle mr-8 mt-1 text-red-600"
+                },
+                [
+                  _vm._v(
+                    "\n                " +
+                      _vm._s(_vm.errors.district[0]) +
+                      "\n            "
+                  )
+                ]
+              )
+            : _vm._e()
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "mb-3 pt-0" }, [
