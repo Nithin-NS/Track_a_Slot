@@ -2,7 +2,7 @@
 @section('content')
     <header style="background-image: url('img/hero.jpg');" class="relative h-screen bg-no-repeat bg-cover lg:bg-center p-6 bg-top-right">
         
-        <a href="{{ route('index') }}" class="text-lg font-bold text-white">Track a Slot</a>
+        <a href="{{ route('index') }}" class="text-lg font-bold text-white">Track My Slot</a>
 
         <div class="grid justify-items-center mt-48">
             <h1 class="text-4xl font-extrabold text-white pb-6 text-center" style="text-shadow: 2px 2px 2px #555555;">

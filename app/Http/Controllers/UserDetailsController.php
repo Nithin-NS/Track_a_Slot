@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\WelcomeMail;
 
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -14,14 +16,18 @@ class UserDetailsController extends Controller
     public function saveDetails(Request $request){
         $this->validate($request,[
             'number' => 'required|unique:userdetails,number|numeric|digits:10',
+            'email' => 'required|unique:userdetails,email|email',
             'state' => 'required',
             'district' => 'required',
         ]);
         $number = $request->get('number');
         $state = $request->get('state');
         $district = $request->get('district');
+        $email = $request->get('email');
+
         DB::table('userdetails')->insert([
             'number' => $number,
+            'email' => $email,
             'state' => $state,
             'district' => $district,
             'created_at' => Carbon::now()->toDateTimeString(),
@@ -31,15 +37,17 @@ class UserDetailsController extends Controller
         //Send SMS
         //Your authentication key
         $authKey = "296861AdNa7wurCB60911821P1";
+        // $authKey = "6048bf459d8e2e5bdf244bca";
 
         //Multiple mobiles numbers separated by comma
         // $mobileNumber = $number;
 
         //Sender ID,While using route4 sender id should be 6 characters long.
-        $senderId = "TRKAST";
+        $senderId = "POWRUP";
 
         //Your message to send, Add URL encoding here.
-        $message = urlencode("Successfully Registerd for Co-WIN Vaccination");
+        $message = urlencode("Hi, Your trackmyshot registration is successful. You will now receive alerts on vaccine slot vaccancies near you.");
+        // $message = urlencode("Hi, Your ChargeMOD verification code is 1990");
 
         //Define route 
         // $route = "default";
@@ -82,9 +90,13 @@ class UserDetailsController extends Controller
 
         curl_close($ch);
 
-        return $response;
+        // return $response;
 
         //End od SMS
-        // return "success";
+
+        //sending mail
+        Mail::to($email)->send(new WelcomeMail());
+        
+        return "success";
     }
 }

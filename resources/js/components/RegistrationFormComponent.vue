@@ -43,6 +43,27 @@
                 </span>
             </div>
 
+            <div class="mb-3 pt-0 relative">
+                <label for="select_email" class="text-blueGray-600"
+                    >Your Email</label
+                >
+                <input
+                    required
+                    v-model="select_email"
+                    type="text"
+                    name="select_email"
+                    placeholder="Your Email"
+                    class="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-wite bg-wite rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:ring w-full"
+                />
+
+                <span
+                    v-if="errors && errors.email"
+                    class="inline-block align-middle mr-8 mt-1 text-red-600"
+                >
+                    {{ errors.email[0] }}
+                </span>
+            </div>
+
             <div class="mb-3 pt-0">
                 <label for="select_state" class="text-blueGray-600"
                     >Select Your State</label
@@ -100,6 +121,19 @@
                 </span>
             </div>
 
+            <!-- <p class="text-blueGray-600">
+                Select Your Age Group:
+            </p>
+            <div
+                class="mb-3 pt-0 flex space-x-4 items-center"
+                style="margin-top: 0;"
+            >
+                <input type="radio" id="age1" name="age" value="30" class=" " />
+                <label for="age1">18 - 44</label>
+                <input type="radio" id="age2" name="age" value="60" />
+                <label for="age2">45+</label>
+            </div> -->
+
             <div class="mb-3 pt-0">
                 <button
                     class="bg-green-500 hover:bg-green-400 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
@@ -123,6 +157,7 @@ export default {
             select_state: "",
             id: "",
             select_district: "",
+            select_email: "",
             districts: "",
             select_number: "",
             success: false,
@@ -178,17 +213,19 @@ export default {
                 .post("/saveDetails", {
                     number: this.select_number,
                     state: this.select_state,
-                    district: this.select_district
+                    district: this.select_district,
+                    email: this.select_email
                 })
                 .then(
                     function(response) {
                         if (response.data) {
-                            // console.log(response.data);
+                            console.log(response.data);
                             this.success = true;
                             this.errors = null;
                             this.select_state = "";
                             this.select_number = "";
                             this.select_district = "";
+                            this.select_email = "";
                         } else {
                             // console.log("No Data");
                         }

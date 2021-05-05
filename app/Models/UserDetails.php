@@ -12,5 +12,6 @@ class UserDetails extends Model
         'number',
         'state',
         'district',
+        'email'
     ];
 }

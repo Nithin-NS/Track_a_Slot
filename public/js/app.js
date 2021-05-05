@@ -1959,6 +1959,40 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "pink-alert",
   data: function data() {
@@ -1969,6 +2003,7 @@ __webpack_require__.r(__webpack_exports__);
       select_state: "",
       id: "",
       select_district: "",
+      select_email: "",
       districts: "",
       select_number: "",
       success: false,
@@ -2010,15 +2045,17 @@ __webpack_require__.r(__webpack_exports__);
       axios.post("/saveDetails", {
         number: this.select_number,
         state: this.select_state,
-        district: this.select_district
+        district: this.select_district,
+        email: this.select_email
       }).then(function (response) {
         if (response.data) {
-          // console.log(response.data);
+          console.log(response.data);
           this.success = true;
           this.errors = null;
           this.select_state = "";
           this.select_number = "";
           this.select_district = "";
+          this.select_email = "";
         } else {// console.log("No Data");
         }
       }.bind(this))["catch"](function (error) {
@@ -19689,6 +19726,62 @@ var render = function() {
                   _vm._v(
                     "\n                " +
                       _vm._s(_vm.errors.number[0]) +
+                      "\n            "
+                  )
+                ]
+              )
+            : _vm._e()
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "mb-3 pt-0 relative" }, [
+          _c(
+            "label",
+            {
+              staticClass: "text-blueGray-600",
+              attrs: { for: "select_email" }
+            },
+            [_vm._v("Your Email")]
+          ),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.select_email,
+                expression: "select_email"
+              }
+            ],
+            staticClass:
+              "px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-wite bg-wite rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:ring w-full",
+            attrs: {
+              required: "",
+              type: "text",
+              name: "select_email",
+              placeholder: "Your Email"
+            },
+            domProps: { value: _vm.select_email },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.select_email = $event.target.value
+              }
+            }
+          }),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.email
+            ? _c(
+                "span",
+                {
+                  staticClass:
+                    "inline-block align-middle mr-8 mt-1 text-red-600"
+                },
+                [
+                  _vm._v(
+                    "\n                " +
+                      _vm._s(_vm.errors.email[0]) +
                       "\n            "
                   )
                 ]
