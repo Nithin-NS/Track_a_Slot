@@ -10,7 +10,7 @@
             </h1>
 
             <div class="mb-3 pt-0">
-                <a href="/register"
+                <a href="{{ route('register') }}"
                     class="bg-green-500 hover:bg-green-400 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                 >

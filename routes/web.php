@@ -25,6 +25,6 @@ Route::get('/email', function () {
 
 Route::get('/register', function () {
     return view('register');
-});
+})->name('register');
 
 Route::post('/saveDetails','App\Http\Controllers\UserDetailsController@saveDetails');
