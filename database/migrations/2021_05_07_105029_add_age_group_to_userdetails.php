@@ -14,7 +14,7 @@ class AddAgeGroupToUserdetails extends Migration
     public function up()
     {
         Schema::table('userdetails', function (Blueprint $table) {
-            $table->string('age_group')->unique();
+            $table->string('age_group');
         });
     }
 

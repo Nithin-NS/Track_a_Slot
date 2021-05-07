@@ -22,7 +22,7 @@ class UserDetailsController extends Controller
             'age_group' => 'required'
         ]);
         $code = '91';
-        $number = '91'.$request->get('number');
+        $number = $request->get('number');
         $state = $request->get('state');
         $district = $request->get('district');
         $email = $request->get('email');
@@ -38,13 +38,13 @@ class UserDetailsController extends Controller
             'updated_at' => Carbon::now()->toDateTimeString()   
         ]);
         
-        $api_districts = http::get('https://cdn-api.co-vin.in/api/v2/admin/location/districts/'.$state)->json();
-        $data = $api_districts['districts'];
-        foreach($data as $dis){
-            if($dis['district_id'] === $district){
-                $selected_district = $dis['district_name'];
-            }
-        }
+        // $api_districts = http::get('https://cdn-api.co-vin.in/api/v2/admin/location/districts/'.$state)->json();
+        // $data = $api_districts['districts'];
+        // foreach($data as $dis){
+        //     if($dis['district_id'] === $district){
+        //         $selected_district = $dis['district_name'];
+        //     }
+        // }
 
         //Send SMS
         $curl = curl_init();
@@ -57,7 +57,7 @@ class UserDetailsController extends Controller
         CURLOPT_TIMEOUT => 30,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => "POST",
-        CURLOPT_POSTFIELDS => "{\"flow_id\":\"6091334eebc7d77fbf241c93\",\"mobiles\":\"$number\",\"VAR1\":\"VALUE1\",\"VAR2\":\"VALUE2\"}",
+        CURLOPT_POSTFIELDS => "{\"flow_id\":\"6091334eebc7d77fbf241c93\",\"mobiles\":\"$code+$number\",\"VAR1\":\"VALUE1\",\"VAR2\":\"VALUE2\"}",
         CURLOPT_HTTPHEADER => array(
             "authkey: 296861AdNa7wurCB60911821P1",
             "content-type: application/JSON"
@@ -80,6 +80,6 @@ class UserDetailsController extends Controller
         //sending mail
         Mail::to($email)->send(new WelcomeMail());
         
-        return $selected_district;
+        return 'success';
     }
 }

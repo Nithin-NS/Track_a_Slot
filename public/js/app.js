@@ -2080,7 +2080,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         if (response.data) {
           // console.log(response.data);
-          this.msg = response.data;
+          // this.msg = response.data;
           this.success = true;
           this.errors = null;
           this.select_state = "";
@@ -19716,9 +19716,7 @@ var render = function() {
             [
               _c("span", { staticClass: "inline-block align-middle mr-8" }, [
                 _vm._v(
-                  "\n                Registration success - Now you will receive notification\n                when slot near " +
-                    _vm._s(_vm.msg) +
-                    " becomes available\n            "
+                  "\n                Registration success - Now you will receive notification\n                when slot becomes available\n            "
                 )
               ]),
               _vm._v(" "),

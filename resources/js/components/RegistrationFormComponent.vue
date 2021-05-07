@@ -20,7 +20,7 @@
             >
                 <span class="inline-block align-middle mr-8">
                     Registration success - Now you will receive notification
-                    when slot near {{ msg }} becomes available
+                    when slot becomes available
                 </span>
                 <button
                     class="absolute bg-transparent text-2xl font-semibold leading-none right-0 top-0 mt-4 mr-6 outline-none focus:outline-none"
@@ -250,7 +250,7 @@ export default {
                     function(response) {
                         if (response.data) {
                             // console.log(response.data);
-                            this.msg = response.data;
+                            // this.msg = response.data;
                             this.success = true;
                             this.errors = null;
                             this.select_state = "";
