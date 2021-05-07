@@ -1993,6 +1993,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "pink-alert",
   data: function data() {
@@ -2007,7 +2034,9 @@ __webpack_require__.r(__webpack_exports__);
       districts: "",
       select_number: "",
       success: false,
-      errors: null
+      errors: null,
+      msg: "",
+      select_age: ""
     };
   },
   created: function created() {
@@ -2046,16 +2075,19 @@ __webpack_require__.r(__webpack_exports__);
         number: this.select_number,
         state: this.select_state,
         district: this.select_district,
-        email: this.select_email
+        email: this.select_email,
+        age_group: this.select_age
       }).then(function (response) {
         if (response.data) {
-          console.log(response.data);
+          // console.log(response.data);
+          this.msg = response.data;
           this.success = true;
           this.errors = null;
           this.select_state = "";
           this.select_number = "";
           this.select_district = "";
           this.select_email = "";
+          this.select_age = "";
         } else {// console.log("No Data");
         }
       }.bind(this))["catch"](function (error) {
@@ -19630,192 +19662,312 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "grid justify-items-center" }, [
-    _c(
-      "div",
-      {
-        staticClass:
-          " bg-white shadow-xl rounded-md max-w-lg md:max-w-lg p-6 space-y-6 mt-24"
-      },
-      [
-        _c("h1", { staticClass: "text-xl font-bold" }, [
-          _vm._v("\n            Co-WIN Vaccination Registration\n        ")
-        ]),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.success,
-                expression: "success"
-              }
-            ],
-            staticClass:
-              "text-white px-6 py-4 border-0 rounded relative mb-4 bg-green-500"
-          },
-          [
-            _c("span", { staticClass: "inline-block align-middle mr-8" }, [
-              _vm._v("\n                Registration Success\n            ")
-            ]),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass:
-                  "absolute bg-transparent text-2xl font-semibold leading-none right-0 top-0 mt-4 mr-6 outline-none focus:outline-none",
-                on: {
-                  click: function($event) {
-                    return _vm.closeAlert()
+  return _c(
+    "div",
+    { staticClass: "flex h-screen justify-center items-center my-4" },
+    [
+      _c(
+        "div",
+        {
+          staticClass:
+            "bg-white shadow-xl rounded-md max-w-md md:max-w-md p-6 space-y-6"
+        },
+        [
+          _c("h1", { staticClass: "text-xl font-bold text-center" }, [
+            _vm._v("\n            Co-WIN slot Notifier\n        ")
+          ]),
+          _vm._v(" "),
+          _c(
+            "p",
+            {
+              staticClass: "text-base font-bold text-center",
+              staticStyle: { "margin-top": "6px" }
+            },
+            [_vm._v("\n            Search for Vaccination Slots\n        ")]
+          ),
+          _vm._v(" "),
+          _c(
+            "p",
+            {
+              staticClass: "text-sm font-light text-center",
+              staticStyle: { "margin-top": "6px" }
+            },
+            [
+              _vm._v(
+                "\n            We do not share the data with third party agencies or use the\n            data for any method of advertising or targeting.\n        "
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.success,
+                  expression: "success"
+                }
+              ],
+              staticClass:
+                "text-white px-6 py-4 border-0 rounded relative mb-4 bg-green-500"
+            },
+            [
+              _c("span", { staticClass: "inline-block align-middle mr-8" }, [
+                _vm._v(
+                  "\n                Registration success - Now you will receive notification\n                when slot near " +
+                    _vm._s(_vm.msg) +
+                    " becomes available\n            "
+                )
+              ]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass:
+                    "absolute bg-transparent text-2xl font-semibold leading-none right-0 top-0 mt-4 mr-6 outline-none focus:outline-none",
+                  on: {
+                    click: function($event) {
+                      return _vm.closeAlert()
+                    }
                   }
-                }
+                },
+                [_c("span", [_vm._v("×")])]
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "mb-3 pt-0 relative" }, [
+            _c(
+              "label",
+              {
+                staticClass: "text-blueGray-600",
+                attrs: { for: "select_number" }
               },
-              [_c("span", [_vm._v("×")])]
-            )
-          ]
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "mb-3 pt-0 relative" }, [
-          _c(
-            "label",
-            {
-              staticClass: "text-blueGray-600",
-              attrs: { for: "select_number" }
-            },
-            [_vm._v("Your Mobile Number(Without +91)")]
-          ),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.select_number,
-                expression: "select_number"
-              }
-            ],
-            staticClass:
-              "px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-wite bg-wite rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:ring w-full",
-            attrs: {
-              required: "",
-              type: "text",
-              name: "select_number",
-              placeholder: "Your Mobile Number"
-            },
-            domProps: { value: _vm.select_number },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.select_number = $event.target.value
-              }
-            }
-          }),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.number
-            ? _c(
-                "span",
-                {
-                  staticClass:
-                    "inline-block align-middle mr-8 mt-1 text-red-600"
-                },
-                [
-                  _vm._v(
-                    "\n                " +
-                      _vm._s(_vm.errors.number[0]) +
-                      "\n            "
-                  )
-                ]
-              )
-            : _vm._e()
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "mb-3 pt-0 relative" }, [
-          _c(
-            "label",
-            {
-              staticClass: "text-blueGray-600",
-              attrs: { for: "select_email" }
-            },
-            [_vm._v("Your Email")]
-          ),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.select_email,
-                expression: "select_email"
-              }
-            ],
-            staticClass:
-              "px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-wite bg-wite rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:ring w-full",
-            attrs: {
-              required: "",
-              type: "text",
-              name: "select_email",
-              placeholder: "Your Email"
-            },
-            domProps: { value: _vm.select_email },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.select_email = $event.target.value
-              }
-            }
-          }),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.email
-            ? _c(
-                "span",
-                {
-                  staticClass:
-                    "inline-block align-middle mr-8 mt-1 text-red-600"
-                },
-                [
-                  _vm._v(
-                    "\n                " +
-                      _vm._s(_vm.errors.email[0]) +
-                      "\n            "
-                  )
-                ]
-              )
-            : _vm._e()
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "mb-3 pt-0" }, [
-          _c(
-            "label",
-            {
-              staticClass: "text-blueGray-600",
-              attrs: { for: "select_state" }
-            },
-            [_vm._v("Select Your State")]
-          ),
-          _vm._v(" "),
-          _c(
-            "select",
-            {
+              [_vm._v("Your Mobile Number(Without +91)")]
+            ),
+            _vm._v(" "),
+            _c("input", {
               directives: [
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.select_state,
-                  expression: "select_state"
+                  value: _vm.select_number,
+                  expression: "select_number"
                 }
               ],
               staticClass:
                 "px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-wite bg-wite rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:ring w-full",
-              attrs: { required: "", name: "select_state", id: "select_state" },
+              attrs: {
+                required: "",
+                type: "text",
+                name: "select_number",
+                placeholder: "Your Mobile Number"
+              },
+              domProps: { value: _vm.select_number },
               on: {
-                change: [
-                  function($event) {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.select_number = $event.target.value
+                }
+              }
+            }),
+            _vm._v(" "),
+            _vm.errors && _vm.errors.number
+              ? _c(
+                  "span",
+                  {
+                    staticClass:
+                      "inline-block align-middle mr-8 mt-1 text-red-600"
+                  },
+                  [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(_vm.errors.number[0]) +
+                        "\n            "
+                    )
+                  ]
+                )
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "mb-3 pt-0 relative" }, [
+            _c(
+              "label",
+              {
+                staticClass: "text-blueGray-600",
+                attrs: { for: "select_email" }
+              },
+              [_vm._v("Your Email")]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.select_email,
+                  expression: "select_email"
+                }
+              ],
+              staticClass:
+                "px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-wite bg-wite rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:ring w-full",
+              attrs: {
+                required: "",
+                type: "text",
+                name: "select_email",
+                placeholder: "Your Email"
+              },
+              domProps: { value: _vm.select_email },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.select_email = $event.target.value
+                }
+              }
+            }),
+            _vm._v(" "),
+            _vm.errors && _vm.errors.email
+              ? _c(
+                  "span",
+                  {
+                    staticClass:
+                      "inline-block align-middle mr-8 mt-1 text-red-600"
+                  },
+                  [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(_vm.errors.email[0]) +
+                        "\n            "
+                    )
+                  ]
+                )
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "mb-3 pt-0" }, [
+            _c(
+              "label",
+              {
+                staticClass: "text-blueGray-600",
+                attrs: { for: "select_state" }
+              },
+              [_vm._v("Select Your State")]
+            ),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.select_state,
+                    expression: "select_state"
+                  }
+                ],
+                staticClass:
+                  "px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-wite bg-wite rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:ring w-full",
+                attrs: {
+                  required: "",
+                  name: "select_state",
+                  id: "select_state"
+                },
+                on: {
+                  change: [
+                    function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.select_state = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    },
+                    function($event) {
+                      return _vm.getDistrict()
+                    }
+                  ]
+                }
+              },
+              [
+                _c(
+                  "option",
+                  { attrs: { value: "0", disabled: "", selected: "" } },
+                  [_vm._v("Select State...")]
+                ),
+                _vm._v(" "),
+                _vm._l(_vm.states, function(state) {
+                  return _c(
+                    "option",
+                    {
+                      key: state.state_id,
+                      domProps: { value: state.state_id }
+                    },
+                    [_vm._v(_vm._s(state.state_name))]
+                  )
+                })
+              ],
+              2
+            ),
+            _vm._v(" "),
+            _vm.errors && _vm.errors.state
+              ? _c(
+                  "span",
+                  {
+                    staticClass:
+                      "inline-block align-middle mr-8 mt-1 text-red-600"
+                  },
+                  [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(_vm.errors.state[0]) +
+                        "\n            "
+                    )
+                  ]
+                )
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "mb-3 pt-0" }, [
+            _c(
+              "label",
+              {
+                staticClass: "text-blueGray-600",
+                attrs: { for: "select_district" }
+              },
+              [_vm._v("Select Your District")]
+            ),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.select_district,
+                    expression: "select_district"
+                  }
+                ],
+                staticClass:
+                  "px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-wite bg-wite rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:ring w-full",
+                attrs: {
+                  name: "select_district",
+                  required: "",
+                  id: "select_district"
+                },
+                on: {
+                  change: function($event) {
                     var $$selectedVal = Array.prototype.filter
                       .call($event.target.options, function(o) {
                         return o.selected
@@ -19824,153 +19976,154 @@ var render = function() {
                         var val = "_value" in o ? o._value : o.value
                         return val
                       })
-                    _vm.select_state = $event.target.multiple
+                    _vm.select_district = $event.target.multiple
                       ? $$selectedVal
                       : $$selectedVal[0]
-                  },
-                  function($event) {
-                    return _vm.getDistrict()
                   }
-                ]
-              }
+                }
+              },
+              [
+                _c("option", { attrs: { value: "0", disabled: "" } }, [
+                  _vm._v("Select District...")
+                ]),
+                _vm._v(" "),
+                _vm._l(_vm.districts, function(district) {
+                  return _c(
+                    "option",
+                    {
+                      key: district.district_id,
+                      domProps: { value: district.district_id }
+                    },
+                    [_vm._v(_vm._s(district.district_name))]
+                  )
+                })
+              ],
+              2
+            ),
+            _vm._v(" "),
+            _vm.errors && _vm.errors.district
+              ? _c(
+                  "span",
+                  {
+                    staticClass:
+                      "inline-block align-middle mr-8 mt-1 text-red-600"
+                  },
+                  [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(_vm.errors.district[0]) +
+                        "\n            "
+                    )
+                  ]
+                )
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "text-blueGray-600" }, [
+            _vm._v("\n            Select Your Age Group:\n        ")
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "mb-3 pt-0 flex space-x-4 items-center",
+              staticStyle: { "margin-top": "0" }
             },
             [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.select_age,
+                    expression: "select_age"
+                  }
+                ],
+                attrs: { type: "radio", id: "age1", name: "age", value: "44" },
+                domProps: { checked: _vm._q(_vm.select_age, "44") },
+                on: {
+                  change: function($event) {
+                    _vm.select_age = "44"
+                  }
+                }
+              }),
+              _vm._v(" "),
               _c(
-                "option",
-                { attrs: { value: "0", disabled: "", selected: "" } },
-                [_vm._v("Select State...")]
+                "label",
+                {
+                  staticStyle: { "margin-left": "6px" },
+                  attrs: { for: "age1" }
+                },
+                [_vm._v("18 - 44")]
               ),
               _vm._v(" "),
-              _vm._l(_vm.states, function(state) {
-                return _c(
-                  "option",
-                  { key: state.state_id, domProps: { value: state.state_id } },
-                  [_vm._v(_vm._s(state.state_name))]
-                )
-              })
-            ],
-            2
-          ),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.state
-            ? _c(
-                "span",
-                {
-                  staticClass:
-                    "inline-block align-middle mr-8 mt-1 text-red-600"
-                },
-                [
-                  _vm._v(
-                    "\n                " +
-                      _vm._s(_vm.errors.state[0]) +
-                      "\n            "
-                  )
-                ]
-              )
-            : _vm._e()
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "mb-3 pt-0" }, [
-          _c(
-            "label",
-            {
-              staticClass: "text-blueGray-600",
-              attrs: { for: "select_district" }
-            },
-            [_vm._v("Select Your District")]
-          ),
-          _vm._v(" "),
-          _c(
-            "select",
-            {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.select_district,
-                  expression: "select_district"
-                }
-              ],
-              staticClass:
-                "px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-wite bg-wite rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:ring w-full",
-              attrs: {
-                name: "select_district",
-                required: "",
-                id: "select_district"
-              },
-              on: {
-                change: function($event) {
-                  var $$selectedVal = Array.prototype.filter
-                    .call($event.target.options, function(o) {
-                      return o.selected
-                    })
-                    .map(function(o) {
-                      var val = "_value" in o ? o._value : o.value
-                      return val
-                    })
-                  _vm.select_district = $event.target.multiple
-                    ? $$selectedVal
-                    : $$selectedVal[0]
-                }
-              }
-            },
-            [
-              _c("option", { attrs: { value: "0", disabled: "" } }, [
-                _vm._v("Select District...")
-              ]),
-              _vm._v(" "),
-              _vm._l(_vm.districts, function(district) {
-                return _c(
-                  "option",
+              _c("input", {
+                directives: [
                   {
-                    key: district.district_id,
-                    domProps: { value: district.district_id }
-                  },
-                  [_vm._v(_vm._s(district.district_name))]
-                )
-              })
-            ],
-            2
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.select_age,
+                    expression: "select_age"
+                  }
+                ],
+                attrs: { type: "radio", id: "age2", name: "age", value: "45" },
+                domProps: { checked: _vm._q(_vm.select_age, "45") },
+                on: {
+                  change: function($event) {
+                    _vm.select_age = "45"
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticStyle: { "margin-left": "6px" },
+                  attrs: { for: "age2" }
+                },
+                [_vm._v("45+")]
+              )
+            ]
           ),
           _vm._v(" "),
-          _vm.errors && _vm.errors.district
+          _vm.errors && _vm.errors.age_group
             ? _c(
                 "span",
                 {
-                  staticClass:
-                    "inline-block align-middle mr-8 mt-1 text-red-600"
+                  staticClass: "inline-block align-left mr-8 mt-0 text-red-600",
+                  staticStyle: { "margin-top": "0" }
                 },
                 [
                   _vm._v(
-                    "\n                " +
-                      _vm._s(_vm.errors.district[0]) +
-                      "\n            "
+                    "\n            " +
+                      _vm._s(_vm.errors.age_group[0]) +
+                      "\n        "
                   )
                 ]
               )
-            : _vm._e()
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "mb-3 pt-0" }, [
-          _c(
-            "button",
-            {
-              staticClass:
-                "bg-green-500 hover:bg-green-400 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150",
-              attrs: { type: "button" },
-              on: {
-                click: function($event) {
-                  $event.preventDefault()
-                  return _vm.saveDetails()
+            : _vm._e(),
+          _vm._v(" "),
+          _c("div", { staticClass: "mb-3 pt-0" }, [
+            _c(
+              "button",
+              {
+                staticClass:
+                  "bg-green-500 hover:bg-green-400 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150",
+                attrs: { type: "button" },
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    return _vm.saveDetails()
+                  }
                 }
-              }
-            },
-            [_vm._v("\n                Submit\n            ")]
-          )
-        ])
-      ]
-    )
-  ])
+              },
+              [_vm._v("\n                Submit\n            ")]
+            )
+          ])
+        ]
+      )
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

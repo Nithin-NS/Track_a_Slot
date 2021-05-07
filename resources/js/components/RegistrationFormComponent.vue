@@ -1,18 +1,26 @@
 <template>
-    <div class="grid justify-items-center">
+    <div class="flex h-screen justify-center items-center my-4">
         <div
-            class=" bg-white shadow-xl rounded-md max-w-lg md:max-w-lg p-6 space-y-6 mt-24"
+            class="bg-white shadow-xl rounded-md max-w-md md:max-w-md p-6 space-y-6"
         >
-            <h1 class="text-xl font-bold">
-                Co-WIN Vaccination Registration
+            <h1 class="text-xl font-bold text-center">
+                Co-WIN slot Notifier
             </h1>
+            <p class="text-base font-bold text-center" style="margin-top: 6px;">
+                Search for Vaccination Slots
+            </p>
+            <p class="text-sm font-light text-center" style="margin-top: 6px;">
+                We do not share the data with third party agencies or use the
+                data for any method of advertising or targeting.
+            </p>
 
             <div
                 v-show="success"
                 class="text-white px-6 py-4 border-0 rounded relative mb-4 bg-green-500"
             >
                 <span class="inline-block align-middle mr-8">
-                    Registration Success
+                    Registration success - Now you will receive notification
+                    when slot near {{ msg }} becomes available
                 </span>
                 <button
                     class="absolute bg-transparent text-2xl font-semibold leading-none right-0 top-0 mt-4 mr-6 outline-none focus:outline-none"
@@ -121,18 +129,37 @@
                 </span>
             </div>
 
-            <!-- <p class="text-blueGray-600">
+            <p class="text-blueGray-600">
                 Select Your Age Group:
             </p>
             <div
                 class="mb-3 pt-0 flex space-x-4 items-center"
                 style="margin-top: 0;"
             >
-                <input type="radio" id="age1" name="age" value="30" class=" " />
-                <label for="age1">18 - 44</label>
-                <input type="radio" id="age2" name="age" value="60" />
-                <label for="age2">45+</label>
-            </div> -->
+                <input
+                    type="radio"
+                    id="age1"
+                    name="age"
+                    value="44"
+                    v-model="select_age"
+                />
+                <label for="age1" style="margin-left: 6px;">18 - 44</label>
+                <input
+                    type="radio"
+                    id="age2"
+                    name="age"
+                    value="45"
+                    v-model="select_age"
+                />
+                <label for="age2" style="margin-left: 6px;">45+</label>
+            </div>
+            <span
+                v-if="errors && errors.age_group"
+                class="inline-block align-left mr-8 mt-0 text-red-600"
+                style="margin-top: 0;"
+            >
+                {{ errors.age_group[0] }}
+            </span>
 
             <div class="mb-3 pt-0">
                 <button
@@ -161,7 +188,9 @@ export default {
             districts: "",
             select_number: "",
             success: false,
-            errors: null
+            errors: null,
+            msg: "",
+            select_age: ""
         };
     },
     created: function() {
@@ -214,18 +243,21 @@ export default {
                     number: this.select_number,
                     state: this.select_state,
                     district: this.select_district,
-                    email: this.select_email
+                    email: this.select_email,
+                    age_group: this.select_age
                 })
                 .then(
                     function(response) {
                         if (response.data) {
-                            console.log(response.data);
+                            // console.log(response.data);
+                            this.msg = response.data;
                             this.success = true;
                             this.errors = null;
                             this.select_state = "";
                             this.select_number = "";
                             this.select_district = "";
                             this.select_email = "";
+                            this.select_age = "";
                         } else {
                             // console.log("No Data");
                         }

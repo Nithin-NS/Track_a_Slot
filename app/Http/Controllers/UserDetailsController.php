@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\WelcomeMail;
-
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
@@ -19,20 +19,31 @@ class UserDetailsController extends Controller
             'email' => 'required|unique:userdetails,email|email',
             'state' => 'required',
             'district' => 'required',
+            'age_group' => 'required'
         ]);
         $number = $request->get('number');
         $state = $request->get('state');
         $district = $request->get('district');
         $email = $request->get('email');
+        $age_group = $request->get('age_group');
 
         DB::table('userdetails')->insert([
             'number' => $number,
             'email' => $email,
             'state' => $state,
             'district' => $district,
+            'age_group' => $age_group,
             'created_at' => Carbon::now()->toDateTimeString(),
             'updated_at' => Carbon::now()->toDateTimeString()   
         ]);
+        
+        $api_districts = http::get('https://cdn-api.co-vin.in/api/v2/admin/location/districts/'.$state)->json();
+        $data = $api_districts['districts'];
+        foreach($data as $dis){
+            if($dis['district_id'] === $district){
+                $selected_district = $dis['district_name'];
+            }
+        }
 
         //Send SMS
         //Your authentication key
@@ -97,6 +108,6 @@ class UserDetailsController extends Controller
         //sending mail
         Mail::to($email)->send(new WelcomeMail());
         
-        return "success";
+        return $selected_district;
     }
 }
