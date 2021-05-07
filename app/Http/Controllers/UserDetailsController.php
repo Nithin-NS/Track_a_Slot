@@ -21,7 +21,8 @@ class UserDetailsController extends Controller
             'district' => 'required',
             'age_group' => 'required'
         ]);
-        $number = $request->get('number');
+        $code = '91';
+        $number = '91'.$request->get('number');
         $state = $request->get('state');
         $district = $request->get('district');
         $email = $request->get('email');
@@ -46,63 +47,34 @@ class UserDetailsController extends Controller
         }
 
         //Send SMS
-        //Your authentication key
-        $authKey = "296861AdNa7wurCB60911821P1";
-        // $authKey = "6048bf459d8e2e5bdf244bca";
+        $curl = curl_init();
 
-        //Multiple mobiles numbers separated by comma
-        // $mobileNumber = $number;
-
-        //Sender ID,While using route4 sender id should be 6 characters long.
-        $senderId = "POWRUP";
-
-        //Your message to send, Add URL encoding here.
-        $message = urlencode("Hi, Your trackmyshot registration is successful. You will now receive alerts on vaccine slot vaccancies near you.");
-        // $message = urlencode("Hi, Your ChargeMOD verification code is 1990");
-
-        //Define route 
-        // $route = "default";
-        //Prepare you post parameters
-        $postData = array(
-            'authkey' => $authKey,
-            'mobiles' => $number,
-            'message' => $message,
-            'sender' => $senderId,
-            // 'route' => $route
-        );
-
-        //API URL
-        $url="http://api.msg91.com/api/sendhttp.php";
-
-        // init the resource
-        $ch = curl_init($url);
-        curl_setopt_array($ch, array(
-            CURLOPT_URL => $url,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_POST => true,
-            CURLOPT_POSTFIELDS => $postData
-            //,CURLOPT_FOLLOWLOCATION => true
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => "https://api.msg91.com/api/v5/flow/",
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "POST",
+        CURLOPT_POSTFIELDS => "{\"flow_id\":\"6091334eebc7d77fbf241c93\",\"mobiles\":\"$number\",\"VAR1\":\"VALUE1\",\"VAR2\":\"VALUE2\"}",
+        CURLOPT_HTTPHEADER => array(
+            "authkey: 296861AdNa7wurCB60911821P1",
+            "content-type: application/JSON"
+        ),
         ));
 
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
 
-        //Ignore SSL certificate verification
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_close($curl);
 
-
-        //get response
-        $response = curl_exec($ch);
-
-        //Print error if any
-        if(curl_errno($ch))
-        {
-            echo 'error:' . curl_error($ch);
-        }
-
-        curl_close($ch);
-
-        // return $response;
-
+        if ($err) {
+            echo "cURL Error #:" . $err;
+        } 
+        // else {
+        //     echo $response;
+        // }
         //End od SMS
 
         //sending mail
